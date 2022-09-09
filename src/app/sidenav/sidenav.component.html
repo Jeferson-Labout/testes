@@ -3,10 +3,10 @@
 integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
     <div class="logo-container">
-        <button class="logo"(click)="toggleCollapse()">H</button>
+        <button class="logo"(click)="toggleCollapse()">HD</button>
         <div class="logo-text" *ngIf="collapsed">HelpDesk</div>
         <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
-            <i class="fal fa-times close-icon"></i>
+            <i @rotate @fadeInOut class="fal fa-times close-icon"></i>
         </button>
     </div>
     <ul class="sidenav-nav">
