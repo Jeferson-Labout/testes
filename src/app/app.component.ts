@@ -19,13 +19,14 @@ export class AppComponent {
 
 
   ngOnInit(): void {
-    
-   
-     }
+
+
+  }
 
   onTogglesSideNav(data: SideNavToggle): void {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
+
   }
 
 

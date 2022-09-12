@@ -14,7 +14,7 @@ export class BodyComponent implements OnInit {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 
-  
+
 
 
   getBodyClass(): string {
@@ -29,15 +29,16 @@ export class BodyComponent implements OnInit {
 
     return styleClass;
   }
- 
+
 
   ngOnInit(): void {
-   
+
   }
 
   onTogglesSideNav(data: SideNavToggle): void {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
+    this.collapsed = this.isSideNavCollapsed
   }
 
 }

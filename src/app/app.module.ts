@@ -11,6 +11,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { LoginComponent } from './login/login.component';
 import { TecnicoComponent } from './tecnico/tecnico.component';
 import { BodyComponent } from './body/body.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 // Para trabalhar com formulários no Angular 12
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -37,6 +38,8 @@ import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from 'ngx-mask';
+import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
+import { TecnicoCreateComponent } from './tecnico/tecnico-create/tecnico-create.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,8 @@ import { NgxMaskModule } from 'ngx-mask';
     ClienteComponent,
     LoginComponent,
     TecnicoComponent,
-    BodyComponent
+    BodyComponent,
+    TecnicoCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -77,15 +81,16 @@ import { NgxMaskModule } from 'ngx-mask';
     DialogModule,
     ButtonModule,
     TableModule,
+    AngularSvgIconModule,
     ToastrModule.forRoot({
       timeOut: 4000,
       closeButton: true,
       progressBar: true
     }),
     NgxMaskModule.forRoot()
-    
+
   ],
-  providers: [],
+  providers: [AuthInterceptorProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
