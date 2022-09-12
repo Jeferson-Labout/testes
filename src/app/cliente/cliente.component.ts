@@ -13,7 +13,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
 export class ClienteComponent implements OnInit {
 
   ELEMENT_DATA: Cliente[] = []
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private service: ClienteService
   ) { }
@@ -30,7 +30,7 @@ export class ClienteComponent implements OnInit {
     this.service.findAll().subscribe(resposta => {
       this.ELEMENT_DATA = resposta
       this.dataSource = new MatTableDataSource<Cliente>(resposta);
-      // this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     })
   }
 

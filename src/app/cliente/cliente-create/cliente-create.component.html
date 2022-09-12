@@ -1,17 +1,16 @@
-<p>tecnico-create works!</p>
 <div class="container mat-elevation-z8">
 
-    <form [formGroup]="tecnicoForm" class="form">
-      <h1 class="full-widt">{{pageTitle}} Técnico {{tecnicoForm.get('nome').value}}</h1>
+    <form [formGroup]="clienteForm" class="form">
+      <h1 class="full-widt">{{pageTitle}} Cliente {{clienteForm.get('nome').value}}</h1>
       <img class="full-width" src="assets/img/create-tec.svg" alt="">
   
       <section class="section">
         <mat-checkbox [disabled]="currentAction=='delete'" (click)="addPerfil(0)" [checked]="currentAction =='delete'"
           class="margin" color="primary">Admin</mat-checkbox>
         <mat-checkbox [disabled]="currentAction=='delete'" (click)="addPerfil(1)" [checked]="currentAction =='delete'"
-          class="margin" color="primary">Cliente</mat-checkbox>
+          class="margin" [checked]="true" color="primary">Cliente</mat-checkbox>
         <mat-checkbox [disabled]="currentAction=='delete'" (click)="addPerfil(2)" [checked]="currentAction =='delete'"
-          [checked]="true" class="margin" color="primary">Tecnico</mat-checkbox>
+          class="margin" color="primary">Técnico</mat-checkbox>
       </section>
       <mat-form-field class="full-width" appearance="legacy">
         <mat-label>Nome</mat-label>

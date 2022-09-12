@@ -11,7 +11,7 @@ import { TecnicoService } from 'src/app/services/tecnico.service';
 })
 export class TecnicoComponent implements OnInit {
   ELEMENT_DATA: Tecnico[] = []
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private service: TecnicoService
   ) { }
@@ -28,7 +28,7 @@ export class TecnicoComponent implements OnInit {
     this.service.findAll().subscribe(resposta => {
       this.ELEMENT_DATA = resposta
       this.dataSource = new MatTableDataSource<Tecnico>(resposta);
-      // this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     })
   }
 

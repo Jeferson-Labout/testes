@@ -40,6 +40,13 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from 'ngx-mask';
 import { AuthInterceptorProvider } from './interceptors/auth.interceptor';
 import { TecnicoCreateComponent } from './tecnico/tecnico-create/tecnico-create.component';
+import { ClienteCreateComponent } from './cliente/cliente-create/cliente-create.component';
+import { ChamadoCreateComponent } from './chamado/chamado-create/chamado-create.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
+
 
 @NgModule({
   declarations: [
@@ -52,7 +59,9 @@ import { TecnicoCreateComponent } from './tecnico/tecnico-create/tecnico-create.
     LoginComponent,
     TecnicoComponent,
     BodyComponent,
-    TecnicoCreateComponent
+    TecnicoCreateComponent,
+    ClienteCreateComponent,
+    ChamadoCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -81,6 +90,10 @@ import { TecnicoCreateComponent } from './tecnico/tecnico-create/tecnico-create.
     DialogModule,
     ButtonModule,
     TableModule,
+    OverlayModule,
+    MenuModule,
+    RippleModule,    
+    CdkMenuModule,
     AngularSvgIconModule,
     ToastrModule.forRoot({
       timeOut: 4000,

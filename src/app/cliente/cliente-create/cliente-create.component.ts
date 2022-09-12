@@ -2,21 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Tecnico } from 'src/app/models/tecnico';
-import { TecnicoService } from 'src/app/services/tecnico.service';
+import { Cliente } from 'src/app/models/cliente';
+import { ClienteService } from 'src/app/services/cliente.service';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.scss']
+  selector: 'app-cliente-create',
+  templateUrl: './cliente-create.component.html',
+  styleUrls: ['./cliente-create.component.scss']
 })
-export class TecnicoCreateComponent implements OnInit {
- 
+export class ClienteCreateComponent implements OnInit {
+
   currentAction: string;
-  tecnicoForm: FormGroup;
+  clienteForm: FormGroup;
   pageTitle: string;
 
-  tecnico: Tecnico = {
+  cliente: Cliente = {
     perfis: []
   }
 
@@ -26,7 +26,7 @@ export class TecnicoCreateComponent implements OnInit {
   senha: FormControl = new FormControl(null, Validators.minLength(3));
 
   constructor(
-    private service: TecnicoService
+    private service: ClienteService
     , private toast: ToastrService
     , private router: Router
     , private route: ActivatedRoute
@@ -45,16 +45,16 @@ export class TecnicoCreateComponent implements OnInit {
       }
       if (this.route.snapshot.url[1].path == 'delete') {
         this.pageTitle = 'Excluido';
-        this.tecnicoForm.disable();
+        this.clienteForm.disable();
       }
     }
   }
   findById(): void {
-    this.tecnico.id = this.route.snapshot.paramMap.get('id');
-    this.service.findById(this.tecnico.id).subscribe(resposta => {
-      this.tecnico = resposta;
-      this.tecnico.perfis = [];
-      this.tecnicoForm.setValue(this.tecnico)
+    this.cliente.id = this.route.snapshot.paramMap.get('id');
+    this.service.findById(this.cliente.id).subscribe(resposta => {
+      this.cliente = resposta;
+      this.cliente.perfis = [];
+      this.clienteForm.setValue(this.cliente)
     })
   }
   submitForm() {
@@ -67,10 +67,10 @@ export class TecnicoCreateComponent implements OnInit {
 
   create(): void {
 
-    this.tecnico = this.tecnicoForm.value
-    this.service.create(this.tecnico).subscribe(resposta => {
-      this.toast.success('Técnico cadastrado com sucesso', 'Cadastro');
-      this.router.navigate(['tecnicos'])
+    this.cliente = this.clienteForm.value
+    this.service.create(this.cliente).subscribe(resposta => {
+      this.toast.success('Cliente cadastrado com sucesso', 'Cadastro');
+      this.router.navigate(['clientes'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -86,10 +86,10 @@ export class TecnicoCreateComponent implements OnInit {
   }
 
   update(): void {
-    this.tecnico = this.tecnicoForm.value
-    this.service.update(this.tecnico).subscribe(resposta => {
-      this.toast.success('Técnico Atualizado com sucesso', 'Update');
-      this.router.navigate(['tecnicos'])
+    this.cliente = this.clienteForm.value
+    this.service.update(this.cliente).subscribe(resposta => {
+      this.toast.success('Cliente Atualizado com sucesso', 'Update');
+      this.router.navigate(['clientes'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -104,9 +104,9 @@ export class TecnicoCreateComponent implements OnInit {
     })
   }
   delete(): void {
-    this.service.delete(this.tecnico.id).subscribe(resposta => {
-      this.toast.success('Técnico Deletado com sucesso', 'delete');
-      this.router.navigate(['tecnicos'])
+    this.service.delete(this.cliente.id).subscribe(resposta => {
+      this.toast.success('Cliente Deletado com sucesso', 'delete');
+      this.router.navigate(['clientes'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -123,19 +123,19 @@ export class TecnicoCreateComponent implements OnInit {
 
   addPerfil(perfil: any): void {
 
-    if (this.tecnico.perfis.includes(perfil)) {
+    if (this.cliente.perfis.includes(perfil)) {
 
-      this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(perfil), 1);
+      this.cliente.perfis.splice(this.cliente.perfis.indexOf(perfil), 1);
 
 
     } else {
 
-      this.tecnico.perfis.push(perfil);
+      this.cliente.perfis.push(perfil);
     }
 
   }
   validaCampos(): boolean {
-    return this.tecnico_nome.value.valid && this.tecnico_cpf.value.valid && this.tecnico_email.value.valid && this.tecnico_senha.value.valid
+    return this.cliente_nome.value.valid && this.cliente_cpf.value.valid && this.cliente_email.value.valid && this.cliente_senha.value.valid
   }
 
   private setCurrentAction() {
@@ -143,21 +143,22 @@ export class TecnicoCreateComponent implements OnInit {
   }
 
   criarFormulario() {
-    this.tecnicoForm = this.fb.group({
+    this.clienteForm = this.fb.group({
       id: [0],
       nome: ['', [Validators.minLength(3)]],
       cpf: ['', [Validators.required]],
       email: ['', [Validators.email]],
       senha: ['', [Validators.minLength(3)]],
-      perfis: [this.tecnico.perfis],
+      perfis: [this.cliente.perfis],
       dataCriacao: ['']
 
 
     })
   }
-  get tecnico_nome() { return this.tecnicoForm.get("nome") as FormControl };
-  get tecnico_cpf() { return this.tecnicoForm.get("cpf") as FormControl };
-  get tecnico_email() { return this.tecnicoForm.get("email") as FormControl };
-  get tecnico_senha() { return this.tecnicoForm.get("senha") as FormControl };
+  get cliente_nome() { return this.clienteForm.get("nome") as FormControl };
+  get cliente_cpf() { return this.clienteForm.get("cpf") as FormControl };
+  get cliente_email() { return this.clienteForm.get("email") as FormControl };
+  get cliente_senha() { return this.clienteForm.get("senha") as FormControl };
+
 
 }
