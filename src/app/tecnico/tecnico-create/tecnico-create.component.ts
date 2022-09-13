@@ -70,7 +70,7 @@ export class TecnicoCreateComponent implements OnInit {
     this.tecnico = this.tecnicoForm.value
     this.service.create(this.tecnico).subscribe(resposta => {
       this.toast.success('Técnico cadastrado com sucesso', 'Cadastro');
-      this.router.navigate(['tecnicos'])
+      this.router.navigate(['tecnico'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -89,7 +89,7 @@ export class TecnicoCreateComponent implements OnInit {
     this.tecnico = this.tecnicoForm.value
     this.service.update(this.tecnico).subscribe(resposta => {
       this.toast.success('Técnico Atualizado com sucesso', 'Update');
-      this.router.navigate(['tecnicos'])
+      this.router.navigate(['tecnico'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -106,7 +106,7 @@ export class TecnicoCreateComponent implements OnInit {
   delete(): void {
     this.service.delete(this.tecnico.id).subscribe(resposta => {
       this.toast.success('Técnico Deletado com sucesso', 'delete');
-      this.router.navigate(['tecnicos'])
+      this.router.navigate(['tecnico'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {

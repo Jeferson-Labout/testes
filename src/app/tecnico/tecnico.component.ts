@@ -17,6 +17,7 @@ export class TecnicoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
     this.findAll();
   }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'acoes'];

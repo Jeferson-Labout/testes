@@ -1,56 +1,44 @@
 <div class="container">
   <h1>Lista de Técnicos</h1>
-  <button routerLink="create" class="mat-elevation-z8" mat-stroked-button color="primary">Novo Técnico</button>
-  <mat-form-field appearance="standard">
-    <mat-label>Filtro</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-  </mat-form-field>
- <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
+  <button routerLink="create" class="mat-elevation-z8 mb-5" mat-stroked-button color="primary">Novo Técnico</button>
+  <p-table #dt [value]="ELEMENT_DATA" dataKey="id" [rowHover]="true" 
+  [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,20,30,40,50]" 
+  [paginator]="true" currentPageReportTemplate="Mostrando de {first} a {last} de {totalRecords} itens"
+  [filterDelay]="0" styleClass="p-datatable-striped">
 
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> Código </th>
-        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-      </ng-container>
+  <ng-template pTemplate="header">
+  <tr>
+      <th pSortableColumn="id" style="width: 6rem">Código <p-sortIcon field="id"></p-sortIcon></th>
+      <th pSortableColumn="nome" style="width: 8rem">Nome <p-sortIcon field="nome"></p-sortIcon></th>
+      <th pSortableColumn="cpf" style="width: 20rem">CPF <p-sortIcon field="cpf"></p-sortIcon></th>
+      <th pSortableColumn="email" style="width: 8rem">E-mail <p-sortIcon field="email"></p-sortIcon></th>
+      <th  style="width: 8rem">Ações</th>
+  </tr>                
+  </ng-template>
 
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Nome </th>
-        <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
-      </ng-container>
+  <ng-template pTemplate="body" let-item>
+      <tr class="p-selectable-row" >
+          <td> <span class="p-column-title">Código</span> {{item.id}} </td>
+          <td> <span class="p-column-title">Nome</span> {{item.nome}} </td>
+          <td> <span class="p-column-title">CPF</span> {{item.cpf}} </td>
+          <td> <span class="p-column-title">E-mail</span> {{item.email }} </td>
+          <td> <span class="p-column-title">Status</span>
+            <a routerLink="update/{{item.id}}">
+              <i class="material-icons edit">edit</i>
+            </a>
 
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> CPF </th>
-        <td mat-cell class="truncate-cell" *matCellDef="let element"> {{element.cpf}} </td>
-      </ng-container>
+            <a routerLink="delete/{{item.id}}">
+              <i class="material-icons delete">delete</i>
+            </a>
+          </td>
+      </tr>
+  </ng-template>
 
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> E-mail </th>
-        <td mat-cell class="truncate-cell" *matCellDef="let element"> {{element.email}} </td>
-      </ng-container>
-
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="acoes">
-        <th mat-header-cell *matHeaderCellDef> Ações </th>
-        <td mat-cell *matCellDef="let element">
-          <a routerLink="update/{{element.id}}">
-            <i class="material-icons edit">edit</i>
-          </a>
-          <a routerLink="delete/{{element.id}}">
-            <i class="material-icons delete">delete</i>
-          </a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
-    </mat-paginator>
-  </div>
+  <ng-template pTemplate="emptymessage" >
+      <tr>
+          <td colspan="4" class="text-center">Nenhuma Venda encontrada.</td>
+      </tr>
+  </ng-template>
+</p-table>
 
 </div>

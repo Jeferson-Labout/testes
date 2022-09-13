@@ -86,7 +86,7 @@ export class ChamadoCreateComponent implements OnInit {
     this.chamado = this.chamadoForm.value
     this.chamadoService.create(this.chamado).subscribe(resposta => {
       this.toastService.success('Chamado criado com sucesso', 'Novo chamado');
-      this.router.navigate(['chamados']);
+      this.router.navigate(['chamado']);
     }, ex => {
       console.log(ex);
 
@@ -127,7 +127,7 @@ export class ChamadoCreateComponent implements OnInit {
     this.chamado = this.chamadoForm.value
     this.chamadoService.update(this.chamado).subscribe(resposta => {
       this.toastService.success('Chamado atualizado com sucesso', 'Atualizar chamado');
-      this.router.navigate(['chamados']);
+      this.router.navigate(['chamado']);
     }, ex => {
       this.toastService.error(ex.error.error);
     })

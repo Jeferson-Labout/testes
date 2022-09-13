@@ -70,7 +70,7 @@ export class ClienteCreateComponent implements OnInit {
     this.cliente = this.clienteForm.value
     this.service.create(this.cliente).subscribe(resposta => {
       this.toast.success('Cliente cadastrado com sucesso', 'Cadastro');
-      this.router.navigate(['clientes'])
+      this.router.navigate(['cliente'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -89,7 +89,7 @@ export class ClienteCreateComponent implements OnInit {
     this.cliente = this.clienteForm.value
     this.service.update(this.cliente).subscribe(resposta => {
       this.toast.success('Cliente Atualizado com sucesso', 'Update');
-      this.router.navigate(['clientes'])
+      this.router.navigate(['cliente'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {
@@ -106,7 +106,7 @@ export class ClienteCreateComponent implements OnInit {
   delete(): void {
     this.service.delete(this.cliente.id).subscribe(resposta => {
       this.toast.success('Cliente Deletado com sucesso', 'delete');
-      this.router.navigate(['clientes'])
+      this.router.navigate(['cliente'])
     }, ex => {
       if (ex.error.errors) {
         ex.error.errors.forEach(element => {

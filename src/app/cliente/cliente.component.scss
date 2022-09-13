@@ -3,9 +3,7 @@
   margin: auto;
 }
 
-table {
-  width: 100%;
-}
+
 
 .mat-form-field {
   font-size: 14px;
@@ -30,23 +28,5 @@ h1 {
   color: red;
 }
 
-.truncate-cell {
-  max-width: 60px;
-  /* feel free to include any other value */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (max-width: 768px) {
-
-  .container {
-    width: auto;
-    margin: auto;
-    padding: 1rem;
-    border-radius: .6rem;
-  }
 
 
-
-}
