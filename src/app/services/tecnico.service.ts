@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 import { Tecnico } from '../models/tecnico';
+import { RetornoApiPaginacaoViewModel } from '../retornoApi/RetornoApiPaginacaoViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,17 @@ export class TecnicoService {
 
 
   }
+  findAllPaginada(page: number, size: number): Observable<RetornoApiPaginacaoViewModel> {
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+
+    return this.http.get<RetornoApiPaginacaoViewModel>(`${API_CONFIG.baseUrl}/tecnicos?${params.toString()}`);
+  }
+
   findAll(): Observable<Tecnico[]> {
     return this.http.get<Tecnico[]>(`${API_CONFIG.baseUrl}/tecnicos`);
   }
+
+
 
   create(tecnico: Tecnico): Observable<Tecnico> {
 

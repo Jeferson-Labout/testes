@@ -28,5 +28,27 @@ h1 {
   color: red;
 }
 
+@media  screen and (max-width:702px) {
+  mat-paginator{
+    display: flex; 
+   flex-direction: column;
+ 
+  
+   zoom: 0.83;
 
+    // width: 100%;
+    // height: 100px;
+    // flex-direction: row;
+  
+    // div{
+    //   display: flex;
+    //   align-items: center;
+    // }
+
+    // button{
+    //   display: flex;
+    //   flex-direction: column;
+    // }
+  }
+}
 

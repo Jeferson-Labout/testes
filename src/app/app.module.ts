@@ -46,6 +46,11 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
+import { PaginacaoComponent } from './modalShared/paginacao/paginacao.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import {PaginatorModule} from 'primeng/paginator';
+
 
 
 @NgModule({
@@ -61,7 +66,8 @@ import { RippleModule } from 'primeng/ripple';
     BodyComponent,
     TecnicoCreateComponent,
     ClienteCreateComponent,
-    ChamadoCreateComponent
+    ChamadoCreateComponent,
+    PaginacaoComponent
   ],
   imports: [
     BrowserModule,
@@ -95,6 +101,9 @@ import { RippleModule } from 'primeng/ripple';
     RippleModule,    
     CdkMenuModule,
     AngularSvgIconModule,
+    NgxPaginationModule,
+    PaginatorModule,
+    PaginationModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 4000,
       closeButton: true,

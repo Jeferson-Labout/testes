@@ -1,40 +1,75 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Tecnico } from 'src/app/models/tecnico';
 import { TecnicoService } from 'src/app/services/tecnico.service';
+import { RetornoApiPaginacaoViewModel } from '../retornoApi/RetornoApiPaginacaoViewModel';
 
 @Component({
   selector: 'app-tecnico',
   templateUrl: './tecnico.component.html',
   styleUrls: ['./tecnico.component.scss']
 })
-export class TecnicoComponent implements OnInit {
-  ELEMENT_DATA: Tecnico[] = []
+export class TecnicoComponent implements AfterViewInit, OnInit {
+  tecnicos: Tecnico[] = [];
+  pgIndex = 2;
+  screenWidth = 0;
+  firstLastButtons = true;
+  pnDisabled = true;
+  hdPageSize = true;
+  totalElementos = 0;
+  pagina = 0;
+  tamanho = 5;
+  pageSizeOptions: number[] = [5, 10, 15, 100];
+
+  dataSource = new MatTableDataSource<Tecnico>(this.tecnicos);
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private service: TecnicoService
   ) { }
 
   ngOnInit(): void {
-    
-    this.findAll();
+
+    this.screenWidth = window.innerWidth;
+    this.findAllPaginada(this.pagina, this.tamanho);
   }
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'acoes'];
-  dataSource = new MatTableDataSource<Tecnico>(this.ELEMENT_DATA);
 
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 702) {
+      this.firstLastButtons = false;
+    }
+  }
 
-  findAll() {
-    this.service.findAll().subscribe(resposta => {
-      this.ELEMENT_DATA = resposta
-      this.dataSource = new MatTableDataSource<Tecnico>(resposta);
-      this.dataSource.paginator = this.paginator;
+  findAllPaginada(pagina: number, tamanho: number) {
+    this.service.findAllPaginada(pagina, tamanho).subscribe(resposta => {
+      this.tecnicos = resposta.content
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+
     })
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+  }
+
+  paginar(event: PageEvent) {
+    this.pagina = event.pageIndex;
+    this.tamanho = event.pageSize;
+    this.findAllPaginada(this.pagina, this.tamanho);
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+
 }
