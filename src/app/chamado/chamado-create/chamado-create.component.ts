@@ -5,7 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Chamado } from 'src/app/models/chamado';
 import { Cliente } from 'src/app/models/cliente';
 import { Tecnico } from 'src/app/models/tecnico';
-import { RetornoApiPaginacaoViewModel } from 'src/app/retornoApi/RetornoApiPaginacaoViewModel';
+import { TecnicoPaginacaoViewModel } from 'src/app/retornoApi/TecnicoPaginacaoViewModel';
 import { ChamadoService } from 'src/app/services/chamado.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { TecnicoService } from 'src/app/services/tecnico.service';
@@ -23,7 +23,7 @@ export class ChamadoCreateComponent implements OnInit {
 
   }
 
-  tecnicoDados: RetornoApiPaginacaoViewModel = new RetornoApiPaginacaoViewModel();
+  tecnicoDados: TecnicoPaginacaoViewModel = new TecnicoPaginacaoViewModel();
 
   clientes: Cliente[] = []
   tecnicos: Tecnico[] = []

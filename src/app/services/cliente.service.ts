@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 import { Cliente } from '../models/cliente';
+import { ClientePaginacaoViewModel } from '../retornoApi/ClientePaginacaoViewModel';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,15 @@ export class ClienteService {
 
 
   }
+
+  findAllPaginada(page: number, size: number): Observable<ClientePaginacaoViewModel> {
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
+
+    return this.http.get<ClientePaginacaoViewModel>(`${API_CONFIG.baseUrl}/clientes?${params.toString()}`);
+  }
+
   findAll(): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${API_CONFIG.baseUrl}/clientes`);
+    return this.http.get<Cliente[]>(`${API_CONFIG.baseUrl}/clientes/all`);
   }
 
   create(cliente: Cliente): Observable<Cliente> {

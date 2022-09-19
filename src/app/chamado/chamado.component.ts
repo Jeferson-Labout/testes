@@ -1,5 +1,5 @@
 import { Component, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Chamado } from 'src/app/models/chamado';
 import { ChamadoService } from 'src/app/services/chamado.service';
@@ -15,13 +15,23 @@ interface ChamadoToggle {
 export class ChamadoComponent implements OnInit {
   @Output() onTogglesChamado: EventEmitter<ChamadoToggle> = new EventEmitter();
   collapsed = false;
+  pgIndex = 2;
   screenWidth = 0;
-  ELEMENT_DATA: Chamado[] = []
+  firstLastButtons = true;
+  pnDisabled = true;
+  hdPageSize = true;
+  totalElementos = 0;
+  pagina = 0;
+  tamanho = 5;
+  pageSizeOptions: number[] = [5, 10, 15, 100];
+
+
+  chamado: Chamado[] = []
   FILTERED_DATA: Chamado[] = []
   modalChamado: boolean;
   displayedColumns: string[];
   // displayedColumns2: string[] =  [ 'id','titulo', 'cliente', 'tecnico', 'status', 'acoes'];
-  dataSource = new MatTableDataSource<Chamado>(this.ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Chamado>(this.chamado);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -35,9 +45,9 @@ export class ChamadoComponent implements OnInit {
     if (window.innerWidth >= 960) {
       this.displayedColumns = ['id', 'titulo', 'cliente', 'tecnico', 'dataAbertura', 'prioridade', 'status', 'acoes'];
     } else {
-      this.displayedColumns = ['id',  'tecnico','cliente' , 'acoes'];
+      this.displayedColumns = ['id', 'tecnico', 'cliente', 'acoes'];
     }
-    this.findAll();
+    this.findAllPaginada(this.pagina, this.tamanho);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -61,13 +71,24 @@ export class ChamadoComponent implements OnInit {
 
 
   }
-  findAll(): void {
-    this.service.findAll().subscribe(resposta => {
-      this.ELEMENT_DATA = resposta;
-      this.dataSource = new MatTableDataSource<Chamado>(resposta);
-      this.dataSource.paginator = this.paginator;
+
+  findAllPaginada(pagina: number, tamanho: number) {
+    this.service.findAllPaginada(pagina, tamanho).subscribe(resposta => {
+      this.chamado = resposta.content
+      console.log(this.chamado)
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+
     })
   }
+
+  // findAll(): void {
+  //   this.service.findAll().subscribe(resposta => {
+  //     this.chamado = resposta;
+  //     this.dataSource = new MatTableDataSource<Chamado>(resposta);
+  //     this.dataSource.paginator = this.paginator;
+  //   })
+  // }
   wideScreen(): Boolean {
     return window.innerWidth >= 960 ? true : false;
 
@@ -103,7 +124,7 @@ export class ChamadoComponent implements OnInit {
 
   orderByStatus(status: any): void {
     let list: Chamado[] = []
-    this.ELEMENT_DATA.forEach(element => {
+    this.chamado.forEach(element => {
       if (element.status == status)
         list.push(element)
     });
@@ -112,5 +133,10 @@ export class ChamadoComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  paginar(event: PageEvent) {
+    this.pagina = event.pageIndex;
+    this.tamanho = event.pageSize;
+    this.findAllPaginada(this.pagina, this.tamanho);
+  }
 
 }

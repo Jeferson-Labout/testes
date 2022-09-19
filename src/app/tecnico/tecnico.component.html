@@ -47,13 +47,12 @@
     </ng-template>
   </p-table>
 
-  <mat-paginator 
-  [length]="totalElementos" 
-  [pageSize]="tamanho" 
-  [pageSizeOptions]="pageSizeOptions"
-  [showFirstLastButtons]="firstLastButtons"   
-  (page)="paginar($event)">
-    <!-- evento de paginar -->
-  </mat-paginator>
- 
+  <!-- <mat-paginator [length]="totalElementos" [pageSize]="tamanho" [pageSizeOptions]="pageSizeOptions"
+    [showFirstLastButtons]="firstLastButtons" (page)="paginar($event)">
+     evento de paginar
+  </mat-paginator> -->
+  <app-paginacao [qdtPaginas]="qdtPaginas" [itensgrid]="itensgrid" [itemsPerPage]="tamanho" [last]="last"
+    [totalItems]="totalElementos" (onPaginate)="mudarPagina($event)">
+  </app-paginacao>
+
 </div>

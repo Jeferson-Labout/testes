@@ -15,6 +15,7 @@ export class PaginacaoComponent implements OnInit {
   @Input() qdtPaginas: number;
   @Input() itemsPerPage: number;
   @Input() itensgrid: number;
+  @Input() last: boolean;
 
 
   @Output() onPaginate: EventEmitter<number> = new EventEmitter<number>();
@@ -23,6 +24,7 @@ export class PaginacaoComponent implements OnInit {
   pagina: number = 1;
   ultimaPagina: number = 0;
   qtdPorPagina: number = 0;
+  showBoundaryLinks: boolean = true;
 
 
   constructor() { }
@@ -46,13 +48,13 @@ export class PaginacaoComponent implements OnInit {
 
       qtdPaginas = this.totalItems / this.qdtPaginas;
 
-      this.qtdPorPagina = this.pagina >= qtdPaginas ? this.totalItems : (this.pagina * this.qdtPaginas);
-
+      this.qtdPorPagina = this.pagina >= qtdPaginas ? this.totalItems : (this.pagina * this.itemsPerPage);
       this.ultimaPagina = this.totalItems == this.itensgrid && this.itensgrid == 0 ? 0 : (this.totalItems - this.itensgrid) + 1;
+      this.paginaParcial = this.last ? this.ultimaPagina : ((this.itemsPerPage * this.pagina) + 1) - this.itensgrid;
 
-      this.paginaParcial = this.pagina >= qtdPaginas ? this.ultimaPagina : ((this.qdtPaginas * this.pagina) + 1) - this.itensgrid;
 
-    }, 500)
+
+    }, 100)
   }
 
   mudarPagina(event: any) {

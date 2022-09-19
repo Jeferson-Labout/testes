@@ -2,9 +2,10 @@ import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angu
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { Tecnico } from 'src/app/models/tecnico';
 import { TecnicoService } from 'src/app/services/tecnico.service';
-import { RetornoApiPaginacaoViewModel } from '../retornoApi/RetornoApiPaginacaoViewModel';
+import { TecnicoPaginacaoViewModel } from '../retornoApi/TecnicoPaginacaoViewModel';
 
 @Component({
   selector: 'app-tecnico',
@@ -20,7 +21,11 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
   hdPageSize = true;
   totalElementos = 0;
   pagina = 0;
-  tamanho = 5;
+  last = false;
+
+  qdtPaginas = 0;
+  itensgrid = 0;
+  tamanho = 2;
   pageSizeOptions: number[] = [5, 10, 15, 100];
 
   dataSource = new MatTableDataSource<Tecnico>(this.tecnicos);
@@ -51,7 +56,9 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
       this.tecnicos = resposta.content
       this.totalElementos = resposta.totalElements;// pegar o total de elementos
       this.pagina = resposta.number;// pegar o nu   
-
+      this.qdtPaginas = resposta.totalPages;// pegar o nu   
+      this.itensgrid = resposta.numberOfElements;// pegar o nu   
+      this.last = resposta.last;// pegar o nu   
     })
   }
 
@@ -63,6 +70,21 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
   paginar(event: PageEvent) {
     this.pagina = event.pageIndex;
     this.tamanho = event.pageSize;
+    this.findAllPaginada(this.pagina, this.tamanho);
+  }
+
+  // mudarPagina(event: any) {
+
+  //   this.pagina = event.pageIndex;
+  //   this.tamanho = event.pageSize;
+
+
+  // }
+
+  mudarPagina(event: any): void {
+    this.pagina = (event.page - 1);
+    // const endItem = event.page * event.itemsPerPage;
+
     this.findAllPaginada(this.pagina, this.tamanho);
   }
 
