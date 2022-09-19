@@ -42,13 +42,13 @@ export class PaginacaoComponent implements OnInit {
 
   somaPaginacao() {
 
-    let qtdPaginas = 0;
+
 
     setTimeout(() => {
 
-      qtdPaginas = this.totalItems / this.qdtPaginas;
+ 
 
-      this.qtdPorPagina = this.pagina >= qtdPaginas ? this.totalItems : (this.pagina * this.itemsPerPage);
+      this.qtdPorPagina = this.pagina >= this.qdtPaginas ? this.totalItems : (this.pagina * this.itemsPerPage);
       this.ultimaPagina = this.totalItems == this.itensgrid && this.itensgrid == 0 ? 0 : (this.totalItems - this.itensgrid) + 1;
       this.paginaParcial = this.last ? this.ultimaPagina : ((this.itemsPerPage * this.pagina) + 1) - this.itensgrid;
 

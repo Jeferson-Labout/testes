@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Chamado } from 'src/app/models/chamado';
 import { ChamadoService } from 'src/app/services/chamado.service';
+import { QuantidadeItensPaginacao } from '../modalShared/quantidadeItensPaginacao';
 interface ChamadoToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -18,20 +19,22 @@ export class ChamadoComponent implements OnInit {
   pgIndex = 2;
   screenWidth = 0;
   firstLastButtons = true;
-  pnDisabled = true;
-  hdPageSize = true;
   totalElementos = 0;
   pagina = 0;
+  last = false;
+  qdtPaginas = 0;
+  itensgrid = 0;
   tamanho = 5;
-  pageSizeOptions: number[] = [5, 10, 15, 100];
+  status = '';
+  pageSizeOptions: QuantidadeItensPaginacao[] = QuantidadeItensPaginacao.listaQuantidades
 
 
-  chamado: Chamado[] = []
+  chamados: Chamado[] = []
   FILTERED_DATA: Chamado[] = []
   modalChamado: boolean;
   displayedColumns: string[];
   // displayedColumns2: string[] =  [ 'id','titulo', 'cliente', 'tecnico', 'status', 'acoes'];
-  dataSource = new MatTableDataSource<Chamado>(this.chamado);
+  dataSource = new MatTableDataSource<Chamado>(this.chamados);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -47,7 +50,10 @@ export class ChamadoComponent implements OnInit {
     } else {
       this.displayedColumns = ['id', 'tecnico', 'cliente', 'acoes'];
     }
+
+   
     this.findAllPaginada(this.pagina, this.tamanho);
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -74,14 +80,25 @@ export class ChamadoComponent implements OnInit {
 
   findAllPaginada(pagina: number, tamanho: number) {
     this.service.findAllPaginada(pagina, tamanho).subscribe(resposta => {
-      this.chamado = resposta.content
-      console.log(this.chamado)
+      this.chamados = resposta.content
       this.totalElementos = resposta.totalElements;// pegar o total de elementos
       this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;// pegar o nu   
+      this.itensgrid = resposta.numberOfElements;// pegar o nu   
+      this.last = resposta.last;// pegar o nu  
 
     })
   }
-
+  getstatusPaginada(pagina: number, tamanho: number, status?: any) {
+    this.service.getStatusPaginada(pagina, tamanho, status).subscribe(resposta => {
+      this.chamados = resposta.content
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;
+      this.itensgrid = resposta.numberOfElements;
+      this.last = resposta.last;
+    })
+  }
   // findAll(): void {
   //   this.service.findAll().subscribe(resposta => {
   //     this.chamado = resposta;
@@ -98,7 +115,14 @@ export class ChamadoComponent implements OnInit {
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.service.getTituloPaginada(this.pagina, this.tamanho, filterValue).subscribe(resposta => {
+      this.chamados = resposta.content
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;
+      this.itensgrid = resposta.numberOfElements;
+      this.last = resposta.last;
+    })
   }
 
 
@@ -123,20 +147,31 @@ export class ChamadoComponent implements OnInit {
   }
 
   orderByStatus(status: any): void {
-    let list: Chamado[] = []
-    this.chamado.forEach(element => {
-      if (element.status == status)
-        list.push(element)
-    });
-    this.FILTERED_DATA = list;
-    this.dataSource = new MatTableDataSource<Chamado>(list);
-    this.dataSource.paginator = this.paginator;
+
+    if (status == '0') {
+      this.status = 'ABERTO'
+    } else if (status == '1') {
+      this.status = 'ANDAMENTO'
+    } else if (status == '2') {
+      this.status = 'ENCERRADO'
+    }
+
+    this.status == '' ? this.findAllPaginada(this.pagina, this.tamanho) : this.getstatusPaginada(this.pagina, this.tamanho, this.status);
   }
 
   paginar(event: PageEvent) {
     this.pagina = event.pageIndex;
     this.tamanho = event.pageSize;
     this.findAllPaginada(this.pagina, this.tamanho);
+
+  }
+
+  mudarPagina(event: any): void {
+    this.pagina = (event.page - 1);
+    // const endItem = event.page * event.itemsPerPage;
+
+    this.orderByStatus(this.status)
+
   }
 
 }

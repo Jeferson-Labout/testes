@@ -1,9 +1,9 @@
-<div class="container">
+<div class="div-container">
   <h1>Lista de Clientes</h1>
   <button routerLink="create" class="mat-elevation-z8 mb-5" mat-stroked-button color="primary">Novo Cliente</button>
 
   <p-table #dt [value]="clientes" dataKey="id" [rowHover]="true" [rows]="2" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[2,10,20,30,40,50]" [paginator]="true"
+    [rowsPerPageOptions]="[2,10,20,30,40,50]" [paginator]="false"
     currentPageReportTemplate="Mostrando de {first} a {last} de {totalRecords} itens" [filterDelay]="0"
     styleClass="p-datatable-striped">
 
@@ -45,5 +45,9 @@
       </tr>
     </ng-template>
   </p-table>
+
+  <app-paginacao [qdtPaginas]="qdtPaginas" [itensgrid]="itensgrid" [itemsPerPage]="tamanho" [last]="last"
+  [totalItems]="totalElementos" (onPaginate)="mudarPagina($event)">
+</app-paginacao>
 
 </div>

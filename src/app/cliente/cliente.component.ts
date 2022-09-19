@@ -13,12 +13,13 @@ import { ClienteService } from 'src/app/services/cliente.service';
 export class ClienteComponent implements OnInit {
   pgIndex = 2;
   screenWidth = 0;
-  firstLastButtons = true;
-  pnDisabled = true;
-  hdPageSize = true;
+  firstLastButtons = true; 
   totalElementos = 0;
   pagina = 0;
-  tamanho = 5;
+  last = false;
+  qdtPaginas = 0;
+  itensgrid = 0;
+  tamanho = 2;
   pageSizeOptions: number[] = [5, 10, 15, 100];
 
   clientes: Cliente[] = []
@@ -49,6 +50,9 @@ export class ClienteComponent implements OnInit {
       this.clientes = resposta.content
       this.totalElementos = resposta.totalElements;// pegar o total de elementos
       this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;// pegar o nu   
+      this.itensgrid = resposta.numberOfElements;// pegar o nu   
+      this.last = resposta.last;// pegar o nu      
 
     })
   }
@@ -56,6 +60,13 @@ export class ClienteComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  mudarPagina(event: any): void {
+    this.pagina = (event.page - 1);
+    // const endItem = event.page * event.itemsPerPage;
+
+    this.findAllPaginada(this.pagina, this.tamanho);
   }
 
 }

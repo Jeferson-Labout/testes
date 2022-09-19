@@ -16,13 +16,10 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
   tecnicos: Tecnico[] = [];
   pgIndex = 2;
   screenWidth = 0;
-  firstLastButtons = true;
-  pnDisabled = true;
-  hdPageSize = true;
+  firstLastButtons = true; 
   totalElementos = 0;
   pagina = 0;
   last = false;
-
   qdtPaginas = 0;
   itensgrid = 0;
   tamanho = 2;
@@ -56,11 +53,13 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
       this.tecnicos = resposta.content
       this.totalElementos = resposta.totalElements;// pegar o total de elementos
       this.pagina = resposta.number;// pegar o nu   
-      this.qdtPaginas = resposta.totalPages;// pegar o nu   
-      this.itensgrid = resposta.numberOfElements;// pegar o nu   
-      this.last = resposta.last;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;
+      this.itensgrid = resposta.numberOfElements;
+      this.last = resposta.last; 
     })
   }
+
+
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;

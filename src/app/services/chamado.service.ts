@@ -17,9 +17,32 @@ export class ChamadoService {
   }
 
   findAllPaginada(page: number, size: number): Observable<ChamadoPaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
 
     return this.http.get<ChamadoPaginacaoViewModel>(`${API_CONFIG.baseUrl}/chamados?${params.toString()}`);
+  }
+  getStatusPaginada(page: number, size: number, status?:any): Observable<ChamadoPaginacaoViewModel> {
+
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString()).set('status', status.toString());
+
+    return this.http.get<ChamadoPaginacaoViewModel>(`${API_CONFIG.baseUrl}/chamados/status?${params.toString()}`);
+  }
+  getTituloPaginada(page: number, size: number, titulo?:any): Observable<ChamadoPaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString()).set('titulo', titulo.toString());
+
+    return this.http.get<ChamadoPaginacaoViewModel>(`${API_CONFIG.baseUrl}/chamados/titulo?${params.toString()}`);
   }
 
   findAll(): Observable<Chamado[]> {
