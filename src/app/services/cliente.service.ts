@@ -19,6 +19,10 @@ export class ClienteService {
   }
 
   findAllPaginada(page: number, size: number): Observable<ClientePaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
 
     return this.http.get<ClientePaginacaoViewModel>(`${API_CONFIG.baseUrl}/clientes?${params.toString()}`);
@@ -26,6 +30,16 @@ export class ClienteService {
 
   findAll(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${API_CONFIG.baseUrl}/clientes/all`);
+  }
+
+  getNomePaginada(page: number, size: number, nome:any): Observable<ClientePaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString()).set('nome', nome.toString());
+
+    return this.http.get<ClientePaginacaoViewModel>(`${API_CONFIG.baseUrl}/clientes/nome?${params.toString()}`);
   }
 
   create(cliente: Cliente): Observable<Cliente> {
@@ -39,4 +53,6 @@ export class ClienteService {
   delete(id: any): Observable<Cliente> {
     return this.http.delete<Cliente>(`${API_CONFIG.baseUrl}/clientes/${id}`);
   }
+
+
 }

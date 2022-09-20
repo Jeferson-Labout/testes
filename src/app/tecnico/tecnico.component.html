@@ -1,6 +1,35 @@
 <div class="div-container">
   <h1>Lista de Técnicos</h1>
   <button routerLink="create" class="mat-elevation-z8 mb-5" mat-stroked-button color="primary">Novo Técnico</button>
+  <div class="row">
+     
+    <div class="col-md-11">
+       <mat-form-field appearance="standard">
+          <mat-label>Nome Cliente</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Nome Cliente" #input>
+       </mat-form-field>
+    </div>
+    <!-- <div class="col-md-1">
+       <label class="col-form-label-sm custom-select-label">Itens por página</label>
+       <select id="quantidadeRegistrosPagina" name="quantidadeRegistrosPagina" class="form-control form-control-sm"
+          [(ngModel)]="tamanho" (change)="mudarPagina($event)">
+          <option *ngFor="let item of pageSizeOptions" [ngValue]="item.quantidade" [selected]="10"> {{ item.quantidade
+             }} </option>
+       </select>
+    </div> -->
+    <div class="col-md-1">
+       <mat-form-field appearance="fill">
+          <mat-label>Itens por página</mat-label>
+          <select matNativeControl [(ngModel)]="tamanho" name="tamanho" (change)="mudarPagina($event)">
+             <option *ngFor="let item of pageSizeOptions" [ngValue]="item.quantidade" [selected]="10">
+              {{item.quantidade}}
+            </option>
+          </select>
+        </mat-form-field>
+    </div>
+
+ </div>
+
   <p-table #dt [value]="tecnicos" dataKey="id" [rowHover]="true" [rows]="tamanho" [showCurrentPageReport]="true"
     [rowsPerPageOptions]="pageSizeOptions" [paginator]="false" [totalRecords]="totalElementos"
     currentPageReportTemplate="Mostrando de {first} a {last} de {totalRecords} itens" [filterDelay]="0"

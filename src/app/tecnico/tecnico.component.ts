@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { Tecnico } from 'src/app/models/tecnico';
 import { TecnicoService } from 'src/app/services/tecnico.service';
+import { QuantidadeItensPaginacao } from '../modalShared/quantidadeItensPaginacao';
 import { TecnicoPaginacaoViewModel } from '../retornoApi/TecnicoPaginacaoViewModel';
 
 @Component({
@@ -22,8 +23,8 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
   last = false;
   qdtPaginas = 0;
   itensgrid = 0;
-  tamanho = 2;
-  pageSizeOptions: number[] = [5, 10, 15, 100];
+  tamanho = 5;
+  pageSizeOptions: QuantidadeItensPaginacao[] = QuantidadeItensPaginacao.listaQuantidades
 
   dataSource = new MatTableDataSource<Tecnico>(this.tecnicos);
   @ViewChild(MatSort) sort: MatSort;
@@ -89,7 +90,14 @@ export class TecnicoComponent implements AfterViewInit, OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.service.getNomePaginada(this.pagina, this.tamanho, filterValue).subscribe(resposta => {
+      this.tecnicos = resposta.content
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;
+      this.itensgrid = resposta.numberOfElements;
+      this.last = resposta.last; 
+    })
   }
 
 

@@ -46,7 +46,22 @@ export class ChamadoService {
   }
 
   findAll(): Observable<Chamado[]> {
-    return this.http.get<Chamado[]>(`${API_CONFIG.baseUrl}/chamados`);
+    return this.http.get<Chamado[]>(`${API_CONFIG.baseUrl}/chamados/all`);
+  }
+  findCount(): Observable<any> {
+    return this.http.get<any>(`${API_CONFIG.baseUrl}/chamados/count`);
+  }
+  findAberto(): Observable<any> {
+    return this.http.get<any>(`${API_CONFIG.baseUrl}/chamados/aberto`);
+  }
+  findAndamento(): Observable<any> {
+    return this.http.get<any>(`${API_CONFIG.baseUrl}/chamados/andamento`);
+  }
+  findFechado(): Observable<any> {
+    return this.http.get<any>(`${API_CONFIG.baseUrl}/chamados/fechado`);
+  }
+  findTop5(): Observable<Chamado[]> {
+    return this.http.get<Chamado[]>(`${API_CONFIG.baseUrl}/chamados/limit`);
   }
 
   create(chamado: Chamado): Observable<Chamado> {

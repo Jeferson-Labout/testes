@@ -50,6 +50,7 @@ import { PaginacaoComponent } from './modalShared/paginacao/paginacao.component'
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import {PaginatorModule} from 'primeng/paginator';
+import { ChartjsModule } from '@coreui/angular-chartjs';
 
 
 
@@ -103,6 +104,7 @@ import {PaginatorModule} from 'primeng/paginator';
     AngularSvgIconModule,
     NgxPaginationModule,
     PaginatorModule,
+    ChartjsModule,
     PaginationModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 4000,

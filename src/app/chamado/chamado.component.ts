@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Chamado } from 'src/app/models/chamado';
 import { ChamadoService } from 'src/app/services/chamado.service';
 import { QuantidadeItensPaginacao } from '../modalShared/quantidadeItensPaginacao';
+import { navbarData } from '../sidenav/nav-data';
 interface ChamadoToggle {
   screenWidth: number;
   collapsed: boolean;
@@ -27,6 +28,7 @@ export class ChamadoComponent implements OnInit {
   tamanho = 5;
   status = '';
   pageSizeOptions: QuantidadeItensPaginacao[] = QuantidadeItensPaginacao.listaQuantidades
+ 
 
 
   chamados: Chamado[] = []

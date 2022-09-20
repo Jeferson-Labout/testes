@@ -18,9 +18,24 @@ export class TecnicoService {
 
   }
   findAllPaginada(page: number, size: number): Observable<TecnicoPaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
 
     return this.http.get<TecnicoPaginacaoViewModel>(`${API_CONFIG.baseUrl}/tecnicos?${params.toString()}`);
+  }
+
+  
+  getNomePaginada(page: number, size: number, nome:any): Observable<TecnicoPaginacaoViewModel> {
+    if (Number.isNaN(page)) {
+      page=0;
+     
+    }
+    const params = new HttpParams().set('page', page.toString()).set('size', size.toString()).set('nome', nome.toString());
+
+    return this.http.get<TecnicoPaginacaoViewModel>(`${API_CONFIG.baseUrl}/tecnicos/nome?${params.toString()}`);
   }
 
   findAll(): Observable<Tecnico[]> {

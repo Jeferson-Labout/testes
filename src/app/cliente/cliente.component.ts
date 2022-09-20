@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Cliente } from 'src/app/models/cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { QuantidadeItensPaginacao } from '../modalShared/quantidadeItensPaginacao';
 
 
 @Component({
@@ -19,10 +20,11 @@ export class ClienteComponent implements OnInit {
   last = false;
   qdtPaginas = 0;
   itensgrid = 0;
-  tamanho = 2;
-  pageSizeOptions: number[] = [5, 10, 15, 100];
+  tamanho = 5;
+  pageSizeOptions: QuantidadeItensPaginacao[] = QuantidadeItensPaginacao.listaQuantidades
 
   clientes: Cliente[] = []
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private service: ClienteService
@@ -58,8 +60,17 @@ export class ClienteComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
+
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.service.getNomePaginada(this.pagina, this.tamanho, filterValue).subscribe(resposta => {
+      this.clientes = resposta.content
+      this.totalElementos = resposta.totalElements;// pegar o total de elementos
+      this.pagina = resposta.number;// pegar o nu   
+      this.qdtPaginas = resposta.totalPages;// pegar o nu   
+      this.itensgrid = resposta.numberOfElements;// pegar o nu   
+      this.last = resposta.last;// pegar o nu  
+    })
+
   }
 
   mudarPagina(event: any): void {
