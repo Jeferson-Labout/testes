@@ -7,6 +7,7 @@
 @import '~primeng/resources/primeng.min.css';
 @import '~primeng/resources/themes/lara-light-blue/theme.css';
 
+
 // "node_modules/bootstrap/dist/css/bootstrap.min.css",
 // "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
 // "src/styles.scss",
@@ -138,6 +139,108 @@ table {
 
     }
 
+    .row {
+        // a little css to set the width for material components to 100% in bootstrap grid
+        .mat-card {
+            display: flex !important;
+            width: 170%;
+        }
+    }
   
 }
 
+// ---
+// CSS to make material design compatible to coreui & bootstrap
+// ---
+
+// material dialog has the z-index 1000
+.c-sidebar.c-sidebar-fixed {
+    z-index: 999;
+}
+
+.col.table,
+.col.mat-form-field {
+    width: 100%;
+}
+
+// grid integration for material
+.row {
+    // a little css to set the width for material components to 100% in bootstrap grid
+    .mat-card {
+        width: 100%;
+    }
+}
+
+
+
+.btn {
+    .mat-icon {
+        font-size: 1.09375rem;
+        vertical-align: middle;
+        width: initial;
+        height: initial;
+    }
+}
+
+// if the mat paginator gets smaller as 450px it will float the buttons
+// and break the design
+.mat-paginator {
+    min-width: 450px;
+}
+
+// menu material icon support
+.nav-icon.mat-icon {
+    font-size: 1.09375rem;
+    vertical-align: text-top;
+}
+.c-sidebar-nav-icon.mat-icon {
+    height: unset;
+}
+
+// ---
+// CSS to make material design compatible to coreui & bootstrap
+// ---
+
+// material dialog has the z-index 1000
+.c-sidebar.c-sidebar-fixed {
+    z-index: 999;
+}
+
+.col.table,
+.col.mat-form-field {
+    width: 100%;
+}
+
+// grid integration for material
+.row {
+    // a little css to set the width for material components to 100% in bootstrap grid
+    .mat-card {
+        width: 100%;
+    }
+}
+
+
+
+.btn {
+    .mat-icon {
+        font-size: 1.09375rem;
+        vertical-align: middle;
+        width: initial;
+        height: initial;
+    }
+}
+
+// if the mat paginator gets smaller as 450px it will float the buttons
+// and break the design
+.mat-paginator {
+    min-width: 450px;
+}
+
+// menu material icon support
+.nav-icon.mat-icon {
+    font-size: 1.09375rem;
+    vertical-align: text-top;
+}
+.c-sidebar-nav-icon.mat-icon {
+    height: unset;
+}

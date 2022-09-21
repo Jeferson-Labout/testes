@@ -65,7 +65,6 @@ export class HomeComponent implements OnInit {
   findTop5(): void {
     this.service.findTop5().subscribe(resposta => {
       this.chamados = resposta;
-    console.log(this.chamados);
     
     })
   }
